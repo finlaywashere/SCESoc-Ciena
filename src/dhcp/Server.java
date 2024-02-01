@@ -80,21 +80,21 @@ public class Server {
 	}
 	public int[] getNextAddress() {
 		if(leases == null) {
-			return new int[] {1,1,1,1};
+			return new int[] {0,0,0,0};
 		}
-		for(int i1 = 1; i1 < leases.length; i1++) {
+		for(int i1 = 0; i1 < leases.length; i1++) {
 			if(leases[i1] == null) {
-				return new int[] {i1,1,1,1};
+				return new int[] {i1,0,0,0};
 			}
-			for(int i2 = 1; i2 < leases.length; i2++) {
+			for(int i2 = 0; i2 < leases.length; i2++) {
 				if(leases[i1][i2] == null) {
-					return new int[] {i1,i2,1,1};
+					return new int[] {i1,i2,0,0};
 				}
-				for(int i3 = 1; i3 < leases.length; i3++) {
+				for(int i3 = 0; i3 < leases.length; i3++) {
 					if(leases[i1][i2][i3] == null) {
-						return new int[] {i1,i2,i3,1};
+						return new int[] {i1,i2,i3,0};
 					}
-					for(int i4 = 1; i4 < leases.length; i4++) {
+					for(int i4 = 0; i4 < leases.length; i4++) {
 						long lease = leases[i1][i2][i3][i4];
 						if(lease < System.currentTimeMillis()) {
 							return new int[] {i1,i2,i3,i4};
@@ -106,6 +106,7 @@ public class Server {
 		return null;
 	}
 	public void allocateAddress(int[] address, long leaseTime) {
+		// Don't allocate the addresses until they're needed to save using ~4 billion longs worth of memory
 		if(leases == null) {
 			leases = new long[256][][][];
 		}
