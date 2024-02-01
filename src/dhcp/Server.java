@@ -16,7 +16,7 @@ public class Server {
 	 * Order is: 1.2.3.4
 	 * 			 [1,2,3,4]
 	 */
-	private long[][][][] leases;
+	private static long[][][][] leases;
 	
 	public Server(InputStream input, OutputStream output) {
 		@SuppressWarnings("resource")
